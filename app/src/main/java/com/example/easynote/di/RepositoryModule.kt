@@ -1,0 +1,17 @@
+package com.example.easynote.di
+
+import com.example.easynote.data.repository.EasyNoteRepositoryImpl
+import com.example.easynote.domain.repository.EasyNoteRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+    @Binds
+    @Singleton
+    abstract fun bindRepository(repositoryImpl: EasyNoteRepositoryImpl): EasyNoteRepository
+}

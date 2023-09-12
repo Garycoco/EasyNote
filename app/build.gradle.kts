@@ -1,7 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
+    id ("dagger.hilt.android.plugin")
+    id ("kotlin-kapt")
     id("com.google.devtools.ksp")
 }
 
@@ -61,8 +62,6 @@ dependencies {
     val kotlinVersion = "1.9.0"
     val composeBom = platform("androidx.compose:compose-bom:2023.06.01")
     val hiltNavigationComposeVersion = "1.0.0"
-    val hiltVersion = "2.47"
-    val lifecycleVersion = "2.6.1"
     val coroutinesVersion = "1.7.3"
     val daggerHiltVersion = "2.47"
     //def firebaseBom = platform('com.google.firebase:firebase-bom:32.2.2')
@@ -78,7 +77,7 @@ dependencies {
 
     // room
     implementation ("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor ("androidx.room:room-compiler:$roomVersion")
+    ksp ("androidx.room:room-compiler:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation ("androidx.room:room-ktx:$roomVersion")
 
@@ -86,6 +85,7 @@ dependencies {
     implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
     api ("org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutines")
     api ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
     //Hilt Navigation Compose
     implementation ("androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion")
@@ -94,8 +94,9 @@ dependencies {
 
     //Hilt
     implementation("com.google.dagger:hilt-android:$daggerHiltVersion")
-    ksp("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
-    ksp("androidx.hilt:hilt-compiler:1.0.0")
+    kapt("com.google.dagger:hilt-android-compiler:$daggerHiltVersion")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    //implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

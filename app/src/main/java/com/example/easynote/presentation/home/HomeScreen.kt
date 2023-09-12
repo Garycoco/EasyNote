@@ -22,35 +22,37 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.easynote.common.Response
 import com.example.easynote.data.model.Note
-import java.util.Date
+import com.example.easynote.presentation.components.FloatingActionButton
+import com.example.easynote.presentation.components.HomeAppBar
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
     homeUiState: HomeUiState,
     onFavouriteChange: (note: Note) -> Unit,
     onNoteDelete: (Long) -> Unit,
+    onAddNoteClicked: () -> Unit,
     onNoteClicked: (Long) -> Unit
 ) {
     when(homeUiState.notes) {
         is Response.Loading -> CircularProgressIndicator()
         is Response.Success -> {
             val notes = homeUiState.notes.data
-            HomeContent(
+            ListContent(
                 notes = notes,
                 onNoteClicked = onNoteClicked,
                 onNoteDelete = onNoteDelete,
-                onFavouriteChange = onFavouriteChange
+                onFavouriteChange = onFavouriteChange,
+                onAddNoteClicked = onAddNoteClicked
             )
         }
         is Response.Error -> {
@@ -60,26 +62,32 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeContent(
+fun ListContent(
     notes: List<Note>,
     onNoteClicked: (Long) -> Unit,
     onNoteDelete: (Long) -> Unit,
     onFavouriteChange: (note: Note) -> Unit,
+    onAddNoteClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(2),
-        contentPadding = PaddingValues(4.dp),
-        modifier = modifier
-    ) {
-        itemsIndexed(notes) { index, note ->
-            NoteCard(
-                index = index,
-                note = note,
-                onNoteClicked = onNoteClicked,
-                onNoteDelete = onNoteDelete,
-                onFavouriteChange = onFavouriteChange
-            )
+    Scaffold(
+        topBar = { HomeAppBar() },
+        floatingActionButton = { FloatingActionButton(onFloatingActionClicked = onAddNoteClicked) }
+    ) { paddingValues ->
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(2),
+            contentPadding = PaddingValues(4.dp),
+            modifier = modifier.padding(paddingValues)
+        ) {
+            itemsIndexed(notes) { index, note ->
+                NoteCard(
+                    index = index,
+                    note = note,
+                    onNoteClicked = onNoteClicked,
+                    onNoteDelete = onNoteDelete,
+                    onFavouriteChange = onFavouriteChange
+                )
+            }
         }
     }
 }

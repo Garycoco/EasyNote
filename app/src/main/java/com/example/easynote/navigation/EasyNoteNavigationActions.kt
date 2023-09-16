@@ -42,6 +42,6 @@ val TOP_LEVEL_DESTINATIONS = listOf(
         route = EasyNoteRoute.favourites,
         selectedIcon = Icons.Rounded.Favorite,
         unselectedIcon = Icons.Rounded.FavoriteBorder,
-        iconTextId = R.string.home
+        iconTextId = R.string.favourites
     )
 )

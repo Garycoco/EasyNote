@@ -75,6 +75,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+    implementation ("androidx.compose.material3:material3-window-size-class:1.1.1")
+    implementation ("androidx.window:window:1.1.0")
+    implementation("com.google.accompanist:accompanist-adaptive:0.33.0-alpha")
+
     // room
     implementation ("androidx.room:room-runtime:$roomVersion")
     ksp ("androidx.room:room-compiler:$roomVersion")
